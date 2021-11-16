@@ -12,16 +12,19 @@ csv_data_t parse(char *file_name)
 		exit(1);
 	}	
     int wholefile_size = 1024;
-    char *wholefile = malloc(sizeof(char) * wholefile_size);
+    char *wholefile = calloc( wholefile_size, sizeof(char));
 	
-	char *buf = malloc(sizeof(char) * K);
+	char *buf = calloc(K, sizeof(char));
     int r = read(f, buf, K);
 	
 	
     while(r > 0) {
+		int old_size = wholefile_size;
         wholefile_size += K;
+		
         wholefile = realloc(wholefile, sizeof(char) * wholefile_size);
-        strcat(wholefile, buf);
+     	memset(wholefile+old_size, '\0', K);   
+		strcat(wholefile, buf);
 		r = read(f, buf, K);
 	}
 	
@@ -49,6 +52,7 @@ csv_data_t parse(char *file_name)
 
     int j = 0;
     int cur = 0;
+    int cols = 0;
 	for(; j < i; j++) {
 		int parse_size2 = 16;
         parse[j] = malloc(parse_size2 * sizeof(char *));

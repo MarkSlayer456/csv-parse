@@ -5,7 +5,17 @@ int main(void)
     csv_data_t a = parse("test.csv");
     printf("%d\n", a.rows);
     printf("%d\n", a.cols);
-    int mark = csv_get_line(a, "mark");
+    for(int i = 0; i < a.rows; i++) {
+    	for(int j = 0; j < a.cols; j++) {
+    		printf("%s |", a.data[i][j]);
+    	}
+    	printf("\n");
+    }
+    csv_data_t b = parse("test.csv");
+    
+
+
+	/*int mark = csv_get_line(a, "mark");
     printf("Mark was found on line: %d\n", mark);
     printf("printing info for mark:\n");
     char **info = csv_get_line_data(a, mark);
@@ -35,6 +45,6 @@ int main(void)
             else printf("%s,", info[i]);
         }
         printf("\n");
-    }
+    }*/
 	return 0;
 }
